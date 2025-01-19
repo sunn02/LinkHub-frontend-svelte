@@ -16,6 +16,7 @@
         filter = event.target.value; // Actualiza el filtro al escribir
         loadLinks(filter); // Carga los enlaces filtrados
     }
+
 </script>
 
 <div>
@@ -44,7 +45,7 @@
             <p>No se encontraron enlaces.</p>
         {/if}
     </div>
-    <button on:click={() => dispatch('')}>Añadir enlace</button>
+    <button on:click= {() => dispatch('newLink')}>Añadir Enlace</button>
 
 </div>
 
