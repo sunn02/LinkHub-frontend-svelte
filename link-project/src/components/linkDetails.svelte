@@ -1,46 +1,50 @@
 <script>
     import { onMount } from 'svelte';
     import { fetchLinkDetails, voteLink, commentLink } from '../api.js';
-
+  
     export let id;
     let link = null;
+    let comments = [];
     let newComment = '';
-
+  
     async function loadDetails() {
-        link = await fetchLinkDetails(id);
-        console.log(link)
+      const data = await fetchLinkDetails(id);
+      link = data.link;
+      comments = data.comments;
     }
-
+  
     async function handleVote() {
-        const updatedLink = await voteLink(id);
-        link = updatedLink.link;
-        loadDetails();
+      const updatedLink = await voteLink(id);
+      link.votes = updatedLink.votes;  
     }
-
+  
     async function handleCommentSubmit(event) {
-        event.preventDefault();
-        await commentLink(id, newComment);
-        newComment = '';
-        loadDetails();
+      event.preventDefault();
+      await commentLink(id, newComment);
+      newComment = '';
+      loadDetails()
     }
-
-    onMount(loadDetails);
+  
+    onMount(() => {
+      loadDetails();
+    });
 </script>
-
-<div>
-    {#if link}
-        <div class="link">
-            <span>Votos: {link.votes}</span>
-            <button on:click={() => handleVote(1)}>Votar</button>
-        </div>
-        <div>
-            {#each link.comments as comment}
-                <p>{comment.content}</p>
-            {/each}
-        </div>
-        <form on:submit={handleCommentSubmit}>
-            <textarea bind:value={newComment} placeholder="Nuevo comentario"></textarea>
-            <button type="submit">Enviar</button>
-        </form>
-    {/if}
-</div>
+  
+  {#if link}
+    <h1>Detalles</h1>
+    <p><strong>Votos:</strong> {link.votes}</p>
+    <button on:click={handleVote}>Votar</button>
+    <p><strong>Comentarios:</strong></p>
+    <ul>
+      {#each comments as comment}
+        <li>{comment.content}</li>
+      {/each}
+    </ul>
+    
+    <form on:submit={handleCommentSubmit}>
+      <textarea bind:value={newComment} placeholder="Nuevo comentario"></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+    
+  {/if}
+  

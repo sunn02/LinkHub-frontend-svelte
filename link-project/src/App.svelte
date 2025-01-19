@@ -12,11 +12,6 @@
 	}
 </script>
 
-<header>
-	<nav>
-		<button on:click={() => goTo('home')}>Inicio</button>
-	</nav>
-</header>
 
 <main>
 	{#if $currentPage === 'home'}
