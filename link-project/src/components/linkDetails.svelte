@@ -1,7 +1,8 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, createEventDispatcher } from 'svelte';
     import { fetchLinkDetails, voteLink, commentLink } from '../api.js';
-  
+
+    const dispatch = createEventDispatcher();
     export let id;
     let link = null;
     let comments = [];
@@ -42,9 +43,9 @@
     </ul>
     
     <form on:submit={handleCommentSubmit}>
-      <textarea bind:value={newComment} placeholder="Nuevo comentario"></textarea>
+      <textarea bind:value={newComment} placeholder="Escribe tu comentario aquí"></textarea>
       <button type="submit">Enviar</button>
     </form>
-    
+  <button on:click= {() => dispatch('home')}>Volver</button>  
   {/if}
   

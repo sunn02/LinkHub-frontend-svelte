@@ -64,9 +64,11 @@
         id="tags"
         type="text"
         bind:value={tagsInput}
-        placeholder="ejemplo1, ejemplo2"
+        placeholder="Etiquetas (separadas por comas)"
     />
 
-    <button type="submit">Guardar</button>
+    <button type="submit">Guardar enlace</button>
 </form>
+<button on:click= {() => dispatch('home')}>Volver</button>
+
 

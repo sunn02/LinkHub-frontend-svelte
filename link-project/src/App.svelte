@@ -21,7 +21,7 @@
             on:newLink={() => goTo('newLink')} 
         />
     {:else if $currentPage === 'details'}
-        <LinkDetails id={$currentLinkId} />
+        <LinkDetails id={$currentLinkId} on:home={() => goTo('home')}/>
     {:else if $currentPage === 'newLink'}
         <LinkForm on:home={() => goTo('home')} />
     {/if}
